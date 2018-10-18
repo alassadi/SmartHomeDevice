@@ -45,7 +45,7 @@ turnIndoorLampOn();
 Serial.println("Lamp inside on");//serial output to pi
 } else if(command == "8"){//serial input from pi: command 8 to turn off indoor lamp 
 turnIndoorLampOff();
-Serial.println("Lamp inside on");//serial output to pi
+Serial.println("Lamp inside off");//serial output to pi
 } else {//serial input from pi (no such command known)
  Serial.println("Not known command"); //serial output to pi
 }
