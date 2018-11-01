@@ -1,4 +1,3 @@
-
 int b4 = 12;
 int b5 = 13;
 int b3 = 11;
@@ -13,6 +12,8 @@ pinMode(b4, OUTPUT);
 pinMode(b5, OUTPUT);
 pinMode(b3, OUTPUT);
 pinMode(b0, OUTPUT);
+
+
 }
 
 
@@ -46,7 +47,15 @@ Serial.println("Lamp inside on");//serial output to pi
 } else if(command == "8"){//serial input from pi: command 8 to turn off indoor lamp 
 turnIndoorLampOff();
 Serial.println("Lamp inside off");//serial output to pi
-} else {//serial input from pi (no such command known)
+}else if(command == "13"){//serial input from pi: command 13 to check if burglar alarm is on 
+isBurglarAlarmOn();
+}else if(command == "14"){//serial input from pi: command 14 to check if fire alarm is on 
+isAlarmOn();
+}else if(command == "15"){//serial input from pi: command 15 to check if outside lamp is on 
+isOutsideLampOn();
+}else if(command == "16"){//serial input from pi: command 16 to check if indoor lamp is on 
+isIndoorLampOn();
+}else {//serial input from pi (no such command known)
  Serial.println("Not known command"); //serial output to pi
 }
 
@@ -67,6 +76,15 @@ digitalWrite(b4, HIGH);
   digitalWrite(b0, HIGH);  
   
 }
+void isOutsideLampOn(){
+  if((digitalRead(b4)==LOW)&&(digitalRead(b5)==HIGH)&&
+  (digitalRead(b3)==HIGH&&(digitalRead(b0)==HIGH))){
+    Serial.println("Outside lamp is on");//serial output to pi
+  }else{
+    Serial.println("Outside lamp is off");//serial output to pi
+  }
+}
+
 void turnIndoorLampOn(){
    digitalWrite(b4, LOW);
   digitalWrite(b5, LOW);
@@ -83,6 +101,16 @@ void turnIndoorLampOff(){
  
 }
 
+void isIndoorLampOn(){
+  if((digitalRead(b4)==LOW)&&(digitalRead(b5)==LOW)&&
+  (digitalRead(b3)==HIGH)&&(digitalRead(b0)==LOW)){
+    Serial.println("Indoor lamp is on");//serial output to pi
+  }else{
+    Serial.println("Indoor lamp is off");//serial output to pi
+  }
+}
+
+
 void turnAlarmOn(){
    digitalWrite(b4, HIGH);
   digitalWrite(b5, LOW);
@@ -97,6 +125,14 @@ void turnAlarmOff(){
   digitalWrite(b0, LOW);  
 
 }
+void isAlarmOn(){
+  if((digitalRead(b4)==HIGH)&&(digitalRead(b5)==LOW)&&
+  (digitalRead(b3)==LOW)&&(digitalRead(b0)==LOW)){
+    Serial.println("Fire alarm is on");//serial output to pi
+  }else{
+    Serial.println("Fire alarm is off");//serial output to pi
+  }
+}
 void burglarAlarmLampOn(){
   digitalWrite(b4, LOW);
   digitalWrite(b5, LOW);
@@ -110,4 +146,12 @@ void burglarAlarmLampOff(){
   digitalWrite(b3, HIGH);
   digitalWrite(b0, HIGH);
  
+}
+void isBurglarAlarmOn(){
+  if((digitalRead(b4)==LOW)&&(digitalRead(b5)==LOW)&&
+  (digitalRead(b3)==HIGH)&&(digitalRead(b0)==HIGH)){
+    Serial.println("Burglar alarm is on");//serial output to pi
+  }else{
+    Serial.println("Burglar alarm is off");//serial output to pi
+  }
 }
