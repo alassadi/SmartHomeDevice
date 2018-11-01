@@ -1,4 +1,4 @@
-
+//sets pins
 int b4 = 12;
 int b5 = 13;
 int b3 = 11;
