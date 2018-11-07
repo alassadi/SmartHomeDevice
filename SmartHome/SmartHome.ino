@@ -47,13 +47,13 @@ Serial.println("Lamp inside on");//serial output to pi
 } else if(command == "8"){//serial input from pi: command 8 to turn off indoor lamp 
 turnIndoorLampOff();
 Serial.println("Lamp inside off");//serial output to pi
-}else if(command == "13"){//serial input from pi: command 13 to check if burglar alarm is on 
+}else if(command == "14"){//serial input from pi: command 13 to check if burglar alarm is on 
 isBurglarAlarmOn();
-}else if(command == "14"){//serial input from pi: command 14 to check if fire alarm is on 
+}else if(command == "15"){//serial input from pi: command 14 to check if fire alarm is on 
 isAlarmOn();
-}else if(command == "15"){//serial input from pi: command 15 to check if outside lamp is on 
+}else if(command == "16"){//serial input from pi: command 15 to check if outside lamp is on 
 isOutsideLampOn();
-}else if(command == "16"){//serial input from pi: command 16 to check if indoor lamp is on 
+}else if(command == "17"){//serial input from pi: command 16 to check if indoor lamp is on 
 isIndoorLampOn();
 }else {//serial input from pi (no such command known)
  Serial.println("Not known command"); //serial output to pi
