@@ -151,13 +151,16 @@ void isBurglarAlarmOn(){
   Serial.print("Temperature outside: ");//serial output to pi
   Serial.println(temp/2);
  }
- //TODO: convert to celsius
  void getTempInside(){
   float tempUp = analogRead(tempUp);
+  float mv = ( tempUp/1024.0)*5000; 
+  float cel = mv/10;
   float tempDown = analogRead(tempDown);
+  float mv1 = ( tempDown/1024.0)*5000; 
+  float cel1 = mv/10;
   Serial.print("Temperature upstairs: ");//serial output to pi
-  Serial.println(tempUp);
+  Serial.println(cel);
   Serial.print("Temperature downstairs: ");
-  Serial.println(tempDown);
+  Serial.println(cel1);
  }
 }
