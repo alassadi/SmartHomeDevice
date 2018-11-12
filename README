@@ -46,28 +46,32 @@ Ex 10: Check temperature
 Input string "10"
 Output celsius in string
 
-Ex 11: Turn on radiator
+Ex 11: Check temperature inside
 Input string "11"
+Output celsius in string
+
+Ex 12: Turn on radiator
+Input string "12"
 Output string "Radiator is on"
 
-Ex 12: Turn off radiator
-Input string "12"
+Ex 13: Turn off radiator
+Input string "13"
 Output string "Radiator is off"
 
-Ex 13: Check if burglar alarm is on
-Input string “13”
+Ex 14: Check if burglar alarm is on
+Input string “14”
 Output string “Burglar alarm is on” or “Burglar alarm is off”
 
-Ex 14: Check if fire alarm is on
-Input string “14”
+Ex 15: Check if fire alarm is on
+Input string “15”
 Output string “Fire alarm is on” or “Fire alarm is off”
 
-Ex 15: Check if outside lamp is on
-Input string “15”
+Ex 16: Check if outside lamp is on
+Input string “16”
 Output string “Outside lamp is on” or “Outside lamp is off”
 
-Ex 16: Check if indoor lamp is on
-Input string “16”
+Ex 17: Check if indoor lamp is on
+Input string “17”
 Output string “Indoor lamp is on” or “Indoor lamp is off”
 
 If input to arduino doesn't match any of these commands:
