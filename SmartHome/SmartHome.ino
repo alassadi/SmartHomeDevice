@@ -146,6 +146,7 @@ void isBurglarAlarmOn(){
   }else{
     Serial.println("Burglar alarm is off");//serial output to pi
   }
+}
  void getTempOutside(){
   float temp = digitalRead(temoPutside);
   Serial.print("Temperature outside: ");//serial output to pi
