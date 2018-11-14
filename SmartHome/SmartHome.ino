@@ -62,18 +62,18 @@ void loop() {
       Serial.println("Lamp inside off");//serial output to pi
     }else if(command == "10"){//serial input from pi: command 10 to check temperature outside
      getTempOutside();
-    }else if(command == "11"){//serial input from pi: command 11 to check temperature inside
-     getTempInside();
-    }else if(command == "14"){//serial input from pi: command 14 to check if burglar alarm is on 
+    }else if(command == "13"){//serial input from pi: command 14 to check if burglar alarm is on 
       isBurglarAlarmOn();
-    }else if(command == "15"){//serial input from pi: command 15 to check if fire alarm is on 
+    }else if(command == "14"){//serial input from pi: command 15 to check if fire alarm is on 
       isAlarmOn();
-    }else if(command == "16"){//serial input from pi: command 16 to check if outside lamp is on 
+    }else if(command == "15"){//serial input from pi: command 16 to check if outside lamp is on 
       isOutsideLampOn();
-    }else if(command == "17"){//serial input from pi: command 17 to check if indoor lamp is on 
+    }else if(command == "16"){//serial input from pi: command 17 to check if indoor lamp is on 
       isIndoorLampOn();
     }else if(command == "20"){ //serial input from pi: command 20 to check the state of the house FIRE, Water Leak, Stove, Window
      checkStateOfHouse();
+    }else if(command == "21"){//serial input from pi: command 11 to check temperature inside
+     getTempInside();
     }else {//serial input from pi (no such command known)
       Serial.println("Not known command"); //serial output to pi
     }
