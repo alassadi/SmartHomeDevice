@@ -29,11 +29,15 @@ void setup() {
 }
 
 void loop() {
-    isWaterLeak();
-    isFire();
+    //isWaterLeak(); Water leak state is checked in checkWaterLeakState()
+    isFire(); //Turns on fire alarm if fire is detected
    if(Serial.available()) { 
     command = Serial.readString();// read the incoming data as string
 
+    if(command == "ping"){
+      Serial.println("Arduino is connected");
+    }
+    
     if(command == "1"){//serial command 1 to turn on burglar alarm
       burglarAlarmLampOn();
       Serial.println("Burglar alarm on");//serial output to pi
@@ -62,22 +66,34 @@ void loop() {
       Serial.println("Lamp inside off");//serial output to pi
     }else if(command == "10"){//serial input from pi: command 10 to check temperature outside
      getTempOutside();
-    }else if(command == "13"){//serial input from pi: command 14 to check if burglar alarm is on 
+    }else if(command == "13"){//serial input from pi: command 13 to check if burglar alarm is on 
       isBurglarAlarmOn();
-    }else if(command == "14"){//serial input from pi: command 15 to check if fire alarm is on 
+    }else if(command == "14"){//serial input from pi: command 14 to check if fire alarm is on 
       isAlarmOn();
-    }else if(command == "15"){//serial input from pi: command 16 to check if outside lamp is on 
+    }else if(command == "15"){//serial input from pi: command 15 to check if outside lamp is on 
       isOutsideLampOn();
-    }else if(command == "16"){//serial input from pi: command 17 to check if indoor lamp is on 
+    }else if(command == "16"){//serial input from pi: command 16 to check if indoor lamp is on 
       isIndoorLampOn();
-    }else if(command == "20"){ //serial input from pi: command 20 to check the state of the house FIRE, Water Leak, Stove, Window
-     checkStateOfHouse();
-    }else if(command == "21"){//serial input from pi: command 11 to check temperature inside
-     getTempInside();
+    }else if(command == "17"){//serial input from pi: command 17 to check temperature inside (upstairs) 
+      getTempUpstairs();
+    }else if(command == "18"){
+    getTempDownstairs();//serial input from pi: command 18 to check temperature inside (downstairs) 
+    /*else if(command == "20"){ //serial input from pi: command 20 to check the state of the house FIRE, Water Leak, Stove, Window
+     checkStateOfHouse();*/
+    /*else if(command == "21"){//serial input from pi: command 11 to check temperature inside
+     getTempInside();*/
+    }else if(command == "19"){//serial input from pi: command 19 to check if there's a fire
+   checkFireState();
+    }else if(command == "20"){//serial input from pi: command 20 to check if there's a water leak
+     checkWaterLeakState();
+    }else if(command == "21"){//serial input from pi: command 21 to check if the stove is on
+    checkStoveState(); 
+    }else if(command == "22"){//serial input from pi: command 22 to check if the window is open
+     checkWindowState(); 
     }else {//serial input from pi (no such command known)
       Serial.println("Not known command"); //serial output to pi
     }
-   }
+    }   
 }
 void turnOutsideLampOn(){
   digitalWrite(b4, LOW);
@@ -161,9 +177,10 @@ void isBurglarAlarmOn(){
 }
  void getTempOutside(){
   float temp = (analogRead(tempOutside) / 2);
-  Serial.print("Temperature outside: ");//serial output to pi
+ // Serial.print("Temperature outside: ");//serial output to pi
   Serial.println(temp);
  }
+ /*
  void getTempInside(){
   Serial.print("Temperature upstairs: ");//serial output to pi
   Serial.print(tempInUp.cel());
@@ -172,13 +189,30 @@ void isBurglarAlarmOn(){
   Serial.print(tempInDown.cel());
   Serial.println("C");
  }
+*/
+ void getTempUpstairs(){
+    Serial.print(tempInUp.cel());
+ }
+
+ void getTempDownstairs(){
+   Serial.print(tempInDown.cel());
+ }
+
+ void isFire(){
+  if(digitalRead(fire)==HIGH){
+      turnFireAlarmOn();
+  }else{
+    turnFireAlarmOff();
+   }
+ }
+ /*
  void isFire(){
   if(digitalRead(fire)==HIGH){
     if(fireAlarmOff == false){
       turnFireAlarmOn();
     }
     if(printF == true){
-      Serial.println("FIRE!!");
+    //  Serial.println("FIRE!!");
       printF = false;
     }
   }else{
@@ -187,33 +221,36 @@ void isBurglarAlarmOn(){
     printF = true;
   }
  }
+ */
+ /*
  void isWaterLeak(){
   if(digitalRead(waterLeak)==HIGH){
      if(printW == true){
-      Serial.println("WATER LEAK!");
+    //  Serial.println("WATER LEAK!");
       printW = false;
     }
   }else{
     printW = true;
   }
  }
+ */
  void checkFireState(){
   if(digitalRead(fire)==HIGH){
     if(fireAlarmOff == false){
       turnFireAlarmOn();
     }
-   Serial.println("FIRE!!");   //serial output to pi
+   Serial.println("FIRE!");   //serial output to pi
   }else{
    turnFireAlarmOff();
    fireAlarmOff = false;
-   Serial.println("No fire");
+   Serial.println("no Fire");
   }
  }
  void checkWaterLeakState(){
   if(digitalRead(waterLeak)==HIGH){
-   Serial.println("WATER LEAK!!");   //serial output to pi
+   Serial.println("WATER LEAK!");   //serial output to pi
   }else{
-   Serial.println("No waterleak");
+   Serial.println("No water leak");
   }
  }
  void checkStoveState(){
@@ -231,10 +268,10 @@ void isBurglarAlarmOn(){
   }
  }
   void checkStateOfHouse(){
-   Serial.println("Starting check...");  //serial output to pi
+ //  Serial.println("Starting check...");  //serial output to pi
    checkFireState();
    checkWaterLeakState();
    checkStoveState();
    checkWindowState();
-   Serial.println("Check complete.");
+  // Serial.println("Check complete.");
   }
