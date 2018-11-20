@@ -1,10 +1,14 @@
-﻿Protocol - two-way-communication between pi and arduino
+Protocol - two-way-communication between pi and arduino
 
 Serial 'input' are sent from pi to arduino, and 'output' are sent from arduino to pi
 
 Examples of commands to the arduino are first described, followed by
 an example of how a python script on a pi could send a request to the arduino
 and then receive a response.
+
+Ex ping: Check if arduino is connected
+Input string "ping"
+Output string "Arduino is connected" if arduino can receive serial input from pi.
 
 Ex 1: Turn on burglar alarm
 Input string "1"
@@ -70,20 +74,32 @@ Ex 16: Check if indoor lamp is on
 Input string “16”
 Output string “Indoor lamp is on” or “Indoor lamp is off”
 
-If input to arduino doesn't match any of these commands:
-Output string "Not known command"
-
-Ex 19: Check temperature inside, upstairs and downstairs
-Input string "19"
+Ex 17: Check temperature inside (upstairs)
+Input string "17"
 Output celsius in string
 
-Ex 20: Check state of house Fire, Water Leak, Stove, Window
+Ex 18: Check temperature inside (downstairs)
+Input string "18"
+Output celsius in string
+
+Ex 19: Check state of house (Fire)
+Input string "19"
+Output string "FIRE!" / "no Fire"
+
+Ex 20: Check state of house (Water Leak)
 Input string "20"
-Output "Fire!" / "no Fire", "WATER LEAK!" / "no water leak", 
-"Stove on" / "stove off", "Window open" / "Window closed" in string
+Output string "WATER LEAK!" / "No water leak"
 
+Ex 21: Check state of house (Stove)
+Input string "21"
+Output string "Stove ON." / "Stove OFF."
 
+Ex 22: Check state of house (Window)
+Input string "22"
+Output string "Window OPEN." / "Window Closed."
 
+If input to arduino doesn't match any of these commands:
+Output string "Not known command"
 
 Example of python script run from a Raspberry Pi 3:
 import serial

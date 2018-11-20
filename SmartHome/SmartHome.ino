@@ -33,8 +33,10 @@ void loop() {
     isFire();
    if(Serial.available()) { 
     command = Serial.readString();// read the incoming data as string
-
-    if(command == "1"){//serial command 1 to turn on burglar alarm
+    if(command == "ping"){
+    Serial.println("Arduino is connected");
+    }
+    else if(command == "1"){//serial command 1 to turn on burglar alarm
       burglarAlarmLampOn();
       Serial.println("Burglar alarm on");//serial output to pi
     }else if(command == "2"){//serial input from pi: command 2 to turn off burglar alarm 
@@ -62,6 +64,12 @@ void loop() {
       Serial.println("Lamp inside off");//serial output to pi
     }else if(command == "10"){//serial input from pi: command 10 to check temperature outside
      getTempOutside();
+    }else if (command == "11"){
+      RadiatorOn();
+      Serial.println("Radiator main floor on");
+    }else if (command == "12") {
+      RadiatorOff();
+      Serial.println("Radiator main floor off");
     }else if(command == "13"){//serial input from pi: command 14 to check if burglar alarm is on 
       isBurglarAlarmOn();
     }else if(command == "14"){//serial input from pi: command 15 to check if fire alarm is on 
@@ -70,11 +78,19 @@ void loop() {
       isOutsideLampOn();
     }else if(command == "16"){//serial input from pi: command 17 to check if indoor lamp is on 
       isIndoorLampOn();
-    }else if(command == "20"){ //serial input from pi: command 20 to check the state of the house FIRE, Water Leak, Stove, Window
-     checkStateOfHouse();
-    }else if(command == "21"){//serial input from pi: command 11 to check temperature inside
-     getTempInside();
-    }else {//serial input from pi (no such command known)
+    }else if(command == "17"){
+  Serial.println(tempInUp.cel());
+    }else if(command == "18"){
+  Serial.println(tempInDown.cel());
+    }else if(command == "19"){
+      checkFireState();
+    }else if(command == "20"){ 
+     checkWaterLeakState();
+    }else if(command == "21"){
+     checkStoveState();
+    }else if(command == "22"){
+      checkWindowState();
+      }else {//serial input from pi (no such command known)
       Serial.println("Not known command"); //serial output to pi
     }
    }
@@ -237,4 +253,20 @@ void isBurglarAlarmOn(){
    checkStoveState();
    checkWindowState();
    Serial.println("Check complete.");
+  }
+
+  void RadiatorOn(){
+  digitalWrite(b4, LOW);
+  digitalWrite(b5, HIGH);
+  digitalWrite(b3, LOW);
+  digitalWrite(b0, HIGH);  
+ 
+  }
+  
+  void RadiatorOff(){
+  digitalWrite(b4, HIGH);
+  digitalWrite(b5, HIGH);
+  digitalWrite(b3, LOW);
+  digitalWrite(b0, HIGH); 
+
   }
