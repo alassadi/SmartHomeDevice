@@ -52,11 +52,11 @@ Output celsius in string
 
 Ex 11: Turn on radiator
 Input string "11"
-Output string "Radiator is on"
+Output string "Radiator main floor on"
 
 Ex 12: Turn off radiator
 Input string "12"
-Output string "Radiator is off"
+Output string "Radiator main floor off"
 
 Ex 13: Check if burglar alarm is on
 Input string “13”
