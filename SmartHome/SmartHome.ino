@@ -203,7 +203,7 @@ void isBurglarAlarmOn(){
       printF = false;
     }
   }else{
-    //turnFireAlarmOff();
+    turnFireAlarmOff();
     fireAlarmOff = false;
     printF = true;
   }
