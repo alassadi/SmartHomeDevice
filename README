@@ -101,6 +101,10 @@ Output string "Window OPEN." / "Window Closed."
 If input to arduino doesn't match any of these commands:
 Output string "Not known command"
 
+
+
+
+Instructions for connection from pi:
 Example of python script run from a Raspberry Pi 3:
 import serial
 ser = serial.Serial('/dev/ttyACM0', 9600)
