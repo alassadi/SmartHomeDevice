@@ -65,7 +65,6 @@ void loop() {
       turnIndoorLampOff();
       Serial.println("Lamp inside off");//serial output to pi
     }else if(command == "9"){ //serial input from pi: command 9 to check if door is open 
-      Serial.println("Checking if the door is open...");
       checkDoorState(); //serial output to pi
     }else if(command == "10"){//serial input from pi: command 10 to check temperature outside
      getTempOutside();
