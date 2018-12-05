@@ -8,6 +8,7 @@ const int fire = 2;
 const int waterLeak = 4;
 const int stove = 5;
 const int window = 6;
+const int door = 3;
 String command;
 bool printF = true;
 bool printW = true;
@@ -26,6 +27,7 @@ void setup() {
  pinMode(waterLeak, INPUT);
  pinMode(stove, INPUT);
  pinMode(window, INPUT);
+ pinMode(door, INPUT);
 }
 
 void loop() {
@@ -62,6 +64,9 @@ void loop() {
     }else if(command == "8"){//serial input from pi: command 8 to turn off indoor lamp 
       turnIndoorLampOff();
       Serial.println("Lamp inside off");//serial output to pi
+    }else if(command == "9"){ //serial input from pi: command 9 to check if door is open 
+      Serial.println("Checking if the door is open...");
+      checkDoorState(); //serial output to pi
     }else if(command == "10"){//serial input from pi: command 10 to check temperature outside
      getTempOutside();
     }else if (command == "11"){
@@ -254,6 +259,14 @@ void isBurglarAlarmOn(){
    checkWindowState();
    Serial.println("Check complete.");
   }
+
+  void checkDoorState(){
+  if(digitalRead(door)==LOW){
+   Serial.println("on");
+  }else{
+   Serial.println("off"); 
+  }
+ }
 
   void RadiatorOn(){
   digitalWrite(b4, LOW);
