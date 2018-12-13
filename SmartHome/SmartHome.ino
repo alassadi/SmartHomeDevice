@@ -12,7 +12,6 @@ const int door = 3;
 String command;
 bool printF = true;
 bool printW = true;
-bool fireAlarmOff = false;
 LM35 tempInUp(A1);
 LM35 tempInDown(A2);
 
@@ -45,13 +44,13 @@ void loop() {
     }else if(command == "2"){//serial input from pi: command 2 to turn off burglar alarm 
       burglarAlarmLampOff();
       Serial.println("Burglar alarm off");//serial output to pi
-    }else if(command == "3"){//serial input from pi: command 3 to ENABLE firealarm alarm 
-      //turnFireAlarmOn();
-      fireAlarmOff = false;
+    }
+    /*else if(command == "3"){//serial input from pi: command 3 to ENABLE firealarm alarm 
+      turnFireAlarmOn();
       Serial.println("Fire alarm enabled);//serial output to pi
-    }else if(command == "4"){//serial input from pi: command 4 to DISABLE firealarm alarm 
-      //turnFireAlarmOff();
-      fireAlarmOff = true;
+    }*/
+    else if(command == "4"){//serial input from pi: command 4 to DISABLE firealarm alarm 
+      turnFireAlarmOff();
       Serial.println("Fire alarm disabled");//serial output to pi
     }else if(command == "5"){//serial input from pi: command 5 to turn on outside lamp 
       turnOutsideLampOn();
@@ -182,21 +181,17 @@ void isBurglarAlarmOn(){
 }
  void getTempOutside(){
   float temp = (analogRead(tempOutside) / 2);
-//  Serial.print("Temperature outside: ");//serial output to pi
   Serial.println(temp);
  }
  void isFire(){
   if(digitalRead(fire)==HIGH){
-    if(fireAlarmOff == true){
-      turnFireAlarmOff();
-    }else if(fireAlarmOff == false){
-      turnFireAlarmOn();
-    }
+   turnFireAlarmOn();
     if(printF == true){
       Serial.println("FIRE!!");
       printF = false;
     }
   }else{
+   delay(1000);
     turnFireAlarmOff();
     if(printF == false){
       Serial.println("No fire.");
@@ -219,13 +214,10 @@ void isBurglarAlarmOn(){
  }
  void checkFireState(){
   if(digitalRead(fire)==HIGH){
-    if(fireAlarmOff == false){
-      turnFireAlarmOn();
-    }
+   turnFireAlarmOn();
    Serial.println("FIRE!!");   //serial output to pi
   }else{
    turnFireAlarmOff();
-   fireAlarmOff = false;
    Serial.println("No fire.");
   }
  }
