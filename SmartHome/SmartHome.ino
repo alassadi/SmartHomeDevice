@@ -65,7 +65,6 @@ void loop() {
       turnIndoorLampOff();
       Serial.println("Lamp inside off");//serial output to pi
     }else if(command == "9"){ //serial input from pi: command 9 to check if door is open 
-      Serial.println("Checking if the door is open...");
       checkDoorState(); //serial output to pi
     }else if(command == "10"){//serial input from pi: command 10 to check temperature outside
      getTempOutside();
@@ -182,16 +181,8 @@ void isBurglarAlarmOn(){
 }
  void getTempOutside(){
   float temp = (analogRead(tempOutside) / 2);
-  Serial.print("Temperature outside: ");//serial output to pi
+//  Serial.print("Temperature outside: ");//serial output to pi
   Serial.println(temp);
- }
- void getTempInside(){
-  Serial.print("Temperature upstairs: ");//serial output to pi
-  Serial.print(tempInUp.cel());
-  Serial.println("C");
-  Serial.print("Temperature downstairs: ");
-  Serial.print(tempInDown.cel());
-  Serial.println("C");
  }
  void isFire(){
   if(digitalRead(fire)==HIGH){
@@ -251,14 +242,6 @@ void isBurglarAlarmOn(){
    Serial.println("Window Closed."); 
   }
  }
-  void checkStateOfHouse(){
-   Serial.println("Starting check...");  //serial output to pi
-   checkFireState();
-   checkWaterLeakState();
-   checkStoveState();
-   checkWindowState();
-   Serial.println("Check complete.");
-  }
 
   void checkDoorState(){
   if(digitalRead(door)==LOW){
