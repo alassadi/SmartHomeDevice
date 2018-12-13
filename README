@@ -2,6 +2,16 @@ Protocol - two-way-communication between pi and arduino
 
 Serial 'input' are sent from pi to arduino, and 'output' are sent from arduino to pi
 
+Inital serial communication conformation message is outputted to pi
+Output string "Now connected to Arduino House"
+
+Fire and Water Leak threats are constantly checked and a message outputted to pi on state change
+Ex Fire:
+Output string "FIRE!!" or "no fire."
+
+Ex Water Leak:
+Output string "WATERLEAK!!" or "no water leak."
+
 Examples of commands to the arduino are first described, followed by
 an example of how a python script on a pi could send a request to the arduino
 and then receive a response.
@@ -84,11 +94,11 @@ Output celsius in string
 
 Ex 19: Check state of house (Fire)
 Input string "19"
-Output string "FIRE!" / "no Fire"
+Output string "FIRE!!" / "no Fire."
 
 Ex 20: Check state of house (Water Leak)
 Input string "20"
-Output string "WATER LEAK!" / "No water leak"
+Output string "WATER LEAK!!" / "No water leak."
 
 Ex 21: Check state of house (Stove)
 Input string "21"
