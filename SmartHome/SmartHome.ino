@@ -28,13 +28,13 @@ void setup() {
  pinMode(stove, INPUT);
  pinMode(window, INPUT);
  pinMode(door, INPUT);
+ Serial.println("Now connected to Arduino House");
 }
 
 void loop() {
-   if(Serial.available()) { 
-    Serial.println("Now connected to Arduino House");
     isWaterLeak();
     isFire();
+   if(Serial.available()) { 
     command = Serial.readString();// read the incoming data as string
     if(command == "ping"){
     Serial.println("Arduino is connected");
@@ -45,14 +45,14 @@ void loop() {
     }else if(command == "2"){//serial input from pi: command 2 to turn off burglar alarm 
       burglarAlarmLampOff();
       Serial.println("Burglar alarm off");//serial output to pi
-    }else if(command == "3"){//serial input from pi: command 3 to turn on firealarm alarm 
-      turnFireAlarmOn();
+    }else if(command == "3"){//serial input from pi: command 3 to ENABLE firealarm alarm 
+      //turnFireAlarmOn();
       fireAlarmOff = false;
-      Serial.println("Fire alarm on");//serial output to pi
-    }else if(command == "4"){//serial input from pi: command 4 to turn off firealarm alarm 
-      turnFireAlarmOff();
+      Serial.println("Fire alarm enabled);//serial output to pi
+    }else if(command == "4"){//serial input from pi: command 4 to DISABLE firealarm alarm 
+      //turnFireAlarmOff();
       fireAlarmOff = true;
-      Serial.println("Fire alarm off");//serial output to pi
+      Serial.println("Fire alarm disabled");//serial output to pi
     }else if(command == "5"){//serial input from pi: command 5 to turn on outside lamp 
       turnOutsideLampOn();
       Serial.println("Lamp outside on");//serial output to pi
@@ -140,13 +140,13 @@ void isIndoorLampOn(){
     Serial.println("Indoor lamp is off");//serial output to pi
   }
 }
-void turnFireAlarmOn(){
+void enableFireAlarm(){
   digitalWrite(b4, HIGH);
   digitalWrite(b5, LOW);
   digitalWrite(b3, LOW);
   digitalWrite(b0, LOW);
 }
-void turnFireAlarmOff(){
+void disableFireAlarm(){
   digitalWrite(b4, LOW);
   digitalWrite(b5, LOW);
   digitalWrite(b3, LOW);
@@ -187,7 +187,9 @@ void isBurglarAlarmOn(){
  }
  void isFire(){
   if(digitalRead(fire)==HIGH){
-    if(fireAlarmOff == false){
+    if(fireAlarmOff == true){
+      turnFireAlarmOff();
+    }else if(fireAlarmOff == false){
       turnFireAlarmOn();
     }
     if(printF == true){
@@ -200,7 +202,6 @@ void isBurglarAlarmOn(){
       Serial.println("No fire.");
       printF = true;
     }
-    fireAlarmOff = false;
   }
  }
  void isWaterLeak(){
