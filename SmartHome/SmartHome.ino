@@ -31,9 +31,10 @@ void setup() {
 }
 
 void loop() {
+   if(Serial.available()) { 
+    Serial.println("Now connected to Arduino House");
     isWaterLeak();
     isFire();
-   if(Serial.available()) { 
     command = Serial.readString();// read the incoming data as string
     if(command == "ping"){
     Serial.println("Arduino is connected");
@@ -195,8 +196,11 @@ void isBurglarAlarmOn(){
     }
   }else{
     turnFireAlarmOff();
+    if(printF == false){
+      Serial.println("No fire.");
+      printF = true;
+    }
     fireAlarmOff = false;
-    printF = true;
   }
  }
  void isWaterLeak(){
@@ -206,7 +210,10 @@ void isBurglarAlarmOn(){
       printW = false;
     }
   }else{
-    printW = true;
+     if(printW == false){
+      Serial.println("No water leak.");
+      printW = true;
+    }
   }
  }
  void checkFireState(){
@@ -218,14 +225,14 @@ void isBurglarAlarmOn(){
   }else{
    turnFireAlarmOff();
    fireAlarmOff = false;
-   Serial.println("No fire");
+   Serial.println("No fire.");
   }
  }
  void checkWaterLeakState(){
   if(digitalRead(waterLeak)==HIGH){
    Serial.println("WATER LEAK!!");   //serial output to pi
   }else{
-   Serial.println("No waterleak");
+   Serial.println("No waterleak.");
   }
  }
  void checkStoveState(){
@@ -242,7 +249,6 @@ void isBurglarAlarmOn(){
    Serial.println("Window Closed."); 
   }
  }
-
   void checkDoorState(){
   if(digitalRead(door)==LOW){
    Serial.println("on");
@@ -250,19 +256,15 @@ void isBurglarAlarmOn(){
    Serial.println("off"); 
   }
  }
-
   void RadiatorOn(){
   digitalWrite(b4, LOW);
   digitalWrite(b5, HIGH);
   digitalWrite(b3, LOW);
   digitalWrite(b0, HIGH);  
- 
   }
-  
   void RadiatorOff(){
   digitalWrite(b4, HIGH);
   digitalWrite(b5, HIGH);
   digitalWrite(b3, LOW);
   digitalWrite(b0, HIGH); 
-
   }
