@@ -139,13 +139,13 @@ void isIndoorLampOn(){
     Serial.println("Indoor lamp is off");//serial output to pi
   }
 }
-void enableFireAlarm(){
+void turnFireAlarmOn(){
   digitalWrite(b4, HIGH);
   digitalWrite(b5, LOW);
   digitalWrite(b3, LOW);
   digitalWrite(b0, LOW);
 }
-void disableFireAlarm(){
+void turnFireAlarmOff(){
   digitalWrite(b4, LOW);
   digitalWrite(b5, LOW);
   digitalWrite(b3, LOW);
