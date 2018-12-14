@@ -12,7 +12,6 @@ const int door = 3;
 String command;
 bool printF = true;
 bool printW = true;
-bool fireAlarmOff = false;
 LM35 tempInUp(A1);
 LM35 tempInDown(A2);
 
@@ -28,6 +27,7 @@ void setup() {
  pinMode(stove, INPUT);
  pinMode(window, INPUT);
  pinMode(door, INPUT);
+ Serial.println("Now connected to Arduino House");
 }
 
 void loop() {
@@ -44,14 +44,14 @@ void loop() {
     }else if(command == "2"){//serial input from pi: command 2 to turn off burglar alarm 
       burglarAlarmLampOff();
       Serial.println("Burglar alarm off");//serial output to pi
-    }else if(command == "3"){//serial input from pi: command 3 to turn on firealarm alarm 
+    }
+    /*else if(command == "3"){//serial input from pi: command 3 to ENABLE firealarm alarm 
       turnFireAlarmOn();
-      fireAlarmOff = false;
-      Serial.println("Fire alarm on");//serial output to pi
-    }else if(command == "4"){//serial input from pi: command 4 to turn off firealarm alarm 
+      Serial.println("Fire alarm enabled);//serial output to pi
+    }*/
+    else if(command == "4"){//serial input from pi: command 4 to DISABLE firealarm alarm 
       turnFireAlarmOff();
-      fireAlarmOff = true;
-      Serial.println("Fire alarm off");//serial output to pi
+      Serial.println("Fire alarm disabled");//serial output to pi
     }else if(command == "5"){//serial input from pi: command 5 to turn on outside lamp 
       turnOutsideLampOn();
       Serial.println("Lamp outside on");//serial output to pi
@@ -181,22 +181,22 @@ void isBurglarAlarmOn(){
 }
  void getTempOutside(){
   float temp = (analogRead(tempOutside) / 2);
-//  Serial.print("Temperature outside: ");//serial output to pi
   Serial.println(temp);
  }
  void isFire(){
   if(digitalRead(fire)==HIGH){
-    if(fireAlarmOff == false){
-      turnFireAlarmOn();
-    }
+   turnFireAlarmOn();
     if(printF == true){
       Serial.println("FIRE!!");
       printF = false;
     }
   }else{
+   delay(1000);
     turnFireAlarmOff();
-    fireAlarmOff = false;
-    printF = true;
+    if(printF == false){
+      Serial.println("No fire.");
+      printF = true;
+    }
   }
  }
  void isWaterLeak(){
@@ -206,26 +206,26 @@ void isBurglarAlarmOn(){
       printW = false;
     }
   }else{
-    printW = true;
+     if(printW == false){
+      Serial.println("No water leak.");
+      printW = true;
+    }
   }
  }
  void checkFireState(){
   if(digitalRead(fire)==HIGH){
-    if(fireAlarmOff == false){
-      turnFireAlarmOn();
-    }
+   turnFireAlarmOn();
    Serial.println("FIRE!!");   //serial output to pi
   }else{
    turnFireAlarmOff();
-   fireAlarmOff = false;
-   Serial.println("No fire");
+   Serial.println("No fire.");
   }
  }
  void checkWaterLeakState(){
   if(digitalRead(waterLeak)==HIGH){
    Serial.println("WATER LEAK!!");   //serial output to pi
   }else{
-   Serial.println("No waterleak");
+   Serial.println("No waterleak.");
   }
  }
  void checkStoveState(){
@@ -242,7 +242,6 @@ void isBurglarAlarmOn(){
    Serial.println("Window Closed."); 
   }
  }
-
   void checkDoorState(){
   if(digitalRead(door)==LOW){
    Serial.println("on");
@@ -250,19 +249,15 @@ void isBurglarAlarmOn(){
    Serial.println("off"); 
   }
  }
-
   void RadiatorOn(){
   digitalWrite(b4, LOW);
   digitalWrite(b5, HIGH);
   digitalWrite(b3, LOW);
   digitalWrite(b0, HIGH);  
- 
   }
-  
   void RadiatorOff(){
   digitalWrite(b4, HIGH);
   digitalWrite(b5, HIGH);
   digitalWrite(b3, LOW);
   digitalWrite(b0, HIGH); 
-
   }
