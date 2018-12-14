@@ -28,7 +28,7 @@ Ex 2: Turn off burglar alarm
 Input string "2"
 Output string "Burglar alarm off"
 
-Ex 3: empty
+Ex 3: Not used
 
 Ex 4: Turn off fire alarm
 Input string "4"
@@ -52,7 +52,7 @@ Output string "Lamp outside off"
 
 Ex 9: Check if door is open
 Input string "9"
-Output string "on" or "off"
+Output string "open" or "closed"
 
 Ex 10: Check temperature outside
 Input string "10"
@@ -117,4 +117,4 @@ Example of python script run from a Raspberry Pi 3:
 import serial
 ser = serial.Serial('/dev/ttyACM0', 9600)
 ser.write('3') #Turns on fire alarm
-print(ser.readLine()) #Prints out respons from arduino
+print(ser.readline()) #Prints out respons from arduino
