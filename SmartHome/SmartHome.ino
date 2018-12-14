@@ -3,15 +3,19 @@ int b4 = 12;
 int b5 = 13;
 int b3 = 11;
 int b0 = 8;
+
 const int tempOutside = 9;
 const int fire = 2;
 const int waterLeak = 4;
 const int stove = 5;
 const int window = 6;
 const int door = 3;
+
 String command;
+
 bool printF = true;
 bool printW = true;
+
 LM35 tempInUp(A1);
 LM35 tempInDown(A2);
 
@@ -51,7 +55,7 @@ void loop() {
     }*/
     else if(command == "4"){//serial input from pi: command 4 to DISABLE firealarm alarm 
       turnFireAlarmOff();
-      Serial.println("Fire alarm disabled");//serial output to pi
+      Serial.println("Fire alarm off");//serial output to pi
     }else if(command == "5"){//serial input from pi: command 5 to turn on outside lamp 
       turnOutsideLampOn();
       Serial.println("Lamp outside on");//serial output to pi
@@ -82,17 +86,17 @@ void loop() {
       isOutsideLampOn();
     }else if(command == "16"){//serial input from pi: command 17 to check if indoor lamp is on 
       isIndoorLampOn();
-    }else if(command == "17"){
-  Serial.println(tempInUp.cel());
-    }else if(command == "18"){
-  Serial.println(tempInDown.cel());
-    }else if(command == "19"){
+    }else if(command == "17"){//serial input from pi: command 17 to check indoor temperature
+  Serial.println(tempInUp.cel());//serial output to pi
+    }else if(command == "18"){//serial input from pi: command 18 to check outdoor temperature
+  Serial.println(tempInDown.cel());//serial output to pi
+    }else if(command == "19"){//serial input from pi: command 19 to check if there is a fire
       checkFireState();
-    }else if(command == "20"){ 
+    }else if(command == "20"){//serial input from pi: command 20 to check if there is a water leak
      checkWaterLeakState();
-    }else if(command == "21"){
+    }else if(command == "21"){//serial input from pi: command 21 to check if the stove is on
      checkStoveState();
-    }else if(command == "22"){
+    }else if(command == "22"){//serial input from pi: command 22 to check if the window is open
       checkWindowState();
       }else {//serial input from pi (no such command known)
       Serial.println("Not known command"); //serial output to pi
@@ -244,9 +248,9 @@ void isBurglarAlarmOn(){
  }
   void checkDoorState(){
   if(digitalRead(door)==LOW){
-   Serial.println("on");
+   Serial.println("open");
   }else{
-   Serial.println("off"); 
+   Serial.println("closed"); 
   }
  }
   void RadiatorOn(){
